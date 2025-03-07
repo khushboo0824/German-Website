@@ -152,7 +152,12 @@
                 alert("Please write something before submitting!");
             }
         }
-
+        window.onload = function () {
+          let savedReviews = localStorage.getItem("reviews");
+          if (savedReviews) {
+            document.getElementById("review-wall").innerHTML = savedReviews;
+          }
+        };
         function editReview(button) {
           let reviewBox = button.parentElement;
           let reviewText = reviewBox.querySelector("p").innerText.replace("🌟 ", "");
