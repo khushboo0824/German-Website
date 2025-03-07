@@ -121,83 +121,8 @@
         <h2>Fill Out the Form Below</h2>
         <a href="https://forms.gle/nYvxQFxndLnPKAUR9" target="_blank" class="hero-btn">Fill Google Form</a>
     </section>
-
-<!-----------javaScript------>
-<!--
 <script>
-    var navLinks = document.getElementById("navLinks");
-    function showMenu() {
-        navLinks.style.right = "0";
-    }
-    function hideMenu() {
-        navLinks.style.right = "-200px";
-    }
-    function addReview(event) {
-        event.preventDefault();
-        let review = document.getElementById("review").value;
-        let reviewWall = document.getElementById("review-wall");
-
-        if (review.trim() !== "") {
-            let newReview = document.createElement("div");
-            newReview.classList.add("review-box"); // Optional class for styling
-            let currentDate = new Date().toLocaleString();
-
-            newReview.innerHTML = `
-                <p>🌟 ${review}</p>
-                <small>${currentDate}</small>
-                <button onclick="editReview(this)">Edit</button>
-                <button onclick="deleteReview(this)">Delete</button>
-            `;
-
-            reviewWall.appendChild(newReview);
-            document.getElementById("review").value = "";
-            alert("Thank you for your feedback!");
-            localStorage.setItem("reviews", reviewWall.innerHTML);
-        } else {
-            alert("Please write something before submitting!");
-        }
-    }
-    window.onload = function () {
-        let savedReviews = localStorage.getItem("reviews");
-        if (savedReviews) {
-            document.getElementById("review-wall").innerHTML = savedReviews;
-        }
-        window.addEventListener("storage", function () {
-            document.getElementById("review-wall").innerHTML = localStorage.getItem("reviews");
-        });
-    };
-    
-    function editReview(button) {
-        let reviewBox = button.parentElement;
-        let reviewText = reviewBox.querySelector("p").innerText.replace("🌟 ", "");
-        let newReview = prompt("Edit your review:", reviewText);
-        if (newReview !== null && newReview.trim() !== "") {
-            reviewBox.querySelector("p").innerHTML = `🌟 ${newReview}`;
-            localStorage.setItem("reviews", document.getElementById("review-wall").innerHTML);
-        }
-    }
-    function deleteReview(button) {
-        let reviewBox = button.parentElement;
-        reviewBox.remove();
-        localStorage.setItem("reviews", document.getElementById("review-wall").innerHTML);
-    }
-
-    document.querySelectorAll('nav ul li a').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-</script>
--->
-
-
-
-
-        
-// Firebase configuration
+    // Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC5xhUiF34UcKNdYh6ZF1aCO-AnAGt_8KE",
     authDomain: "reviews-a9006.firebaseapp.com",
@@ -309,3 +234,81 @@ document.querySelectorAll('nav ul li a').forEach(anchor => {
 
 // Load Reviews on Page Load
 window.onload = loadReviews;
+</script>
+
+<!-----------javaScript------>
+<!--
+<script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu() {
+        navLinks.style.right = "0";
+    }
+    function hideMenu() {
+        navLinks.style.right = "-200px";
+    }
+    function addReview(event) {
+        event.preventDefault();
+        let review = document.getElementById("review").value;
+        let reviewWall = document.getElementById("review-wall");
+
+        if (review.trim() !== "") {
+            let newReview = document.createElement("div");
+            newReview.classList.add("review-box"); // Optional class for styling
+            let currentDate = new Date().toLocaleString();
+
+            newReview.innerHTML = `
+                <p>🌟 ${review}</p>
+                <small>${currentDate}</small>
+                <button onclick="editReview(this)">Edit</button>
+                <button onclick="deleteReview(this)">Delete</button>
+            `;
+
+            reviewWall.appendChild(newReview);
+            document.getElementById("review").value = "";
+            alert("Thank you for your feedback!");
+            localStorage.setItem("reviews", reviewWall.innerHTML);
+        } else {
+            alert("Please write something before submitting!");
+        }
+    }
+    window.onload = function () {
+        let savedReviews = localStorage.getItem("reviews");
+        if (savedReviews) {
+            document.getElementById("review-wall").innerHTML = savedReviews;
+        }
+        window.addEventListener("storage", function () {
+            document.getElementById("review-wall").innerHTML = localStorage.getItem("reviews");
+        });
+    };
+    
+    function editReview(button) {
+        let reviewBox = button.parentElement;
+        let reviewText = reviewBox.querySelector("p").innerText.replace("🌟 ", "");
+        let newReview = prompt("Edit your review:", reviewText);
+        if (newReview !== null && newReview.trim() !== "") {
+            reviewBox.querySelector("p").innerHTML = `🌟 ${newReview}`;
+            localStorage.setItem("reviews", document.getElementById("review-wall").innerHTML);
+        }
+    }
+    function deleteReview(button) {
+        let reviewBox = button.parentElement;
+        reviewBox.remove();
+        localStorage.setItem("reviews", document.getElementById("review-wall").innerHTML);
+    }
+
+    document.querySelectorAll('nav ul li a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+-->
+
+
+
+
+        
+     
