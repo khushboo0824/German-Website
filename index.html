@@ -148,6 +148,7 @@
                 reviewWall.appendChild(newReview);
                 document.getElementById("review").value = "";
                 alert("Thank you for your feedback!");
+                localStorage.setItem("reviews", reviewWall.innerHTML);
             } else {
                 alert("Please write something before submitting!");
             }
@@ -157,6 +158,9 @@
           if (savedReviews) {
             document.getElementById("review-wall").innerHTML = savedReviews;
           }
+           window.addEventListener("storage", function () {
+               document.getElementById("review-wall").innerHTML = localStorage.getItem("reviews");
+           });
         };
         function editReview(button) {
           let reviewBox = button.parentElement;
@@ -169,6 +173,7 @@
         function deleteReview(button) {
           let reviewBox = button.parentElement;
           reviewBox.remove();
+          localStorage.setItem("reviews", document.getElementById("review-wall").innerHTML);
         }
 
         document.querySelectorAll('nav ul li a').forEach(anchor => {
