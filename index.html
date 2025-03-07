@@ -100,13 +100,13 @@
         <form id="" method"reviewform">
     =
             <label for="review">Your Review:</label>
-            <textarea id="review" name="review" rows="1" required></textarea><br>
+            <textarea id="review" name="review" rows="2" placeholder="Write your review..." required></textarea><br>
             <button type="submit" class="hero-btn">Submit Review</button>
         </form>
 
         
         <h2>What Our Students Say</h2>
-        <div id="reviewWall"></div>
+        <div id="review-wall"></div>
     </section>
     <!----------contact-------->
     <section id="contact" class="contact" style="text-align: center;">
@@ -131,14 +131,16 @@
         function addReview(event) {
              event.preventDefault();
              let review = document.getElementById("review").value;
+             let reviewWall = document.getElementById("review-wall");
+            
              if (review.trim() !== "") {
-                let reviewWall = document.getElementById("review-wall");
                 let newReview = document.createElement("div");
-                newReview.classList.add("review-box");
-                newReview.innerHTML = <p>`🌟 ${review}</p>`;
+                newReview.classList.add("review-box"); // Optional class for styling
+                newReview.innerHTML = `<p>🌟 ${review}</p>`;
                  
                 reviewWall.appendChild(newReview);
-                document.getElementById("review").value = ""; 
+                document.getElementById("review").value = "";
+                alert("Thank you for your feedback!");
             } else {
                 alert("Please write something before submitting!");
             }
