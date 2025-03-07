@@ -97,16 +97,16 @@
         <h1>REVIEWS AND RESULTS</h1>
 
         <h2>Leave Your Review</h2>
-        <form action="" method="post">
+        <form id="" method"reviewform">
     =
             <label for="review">Your Review:</label>
             <textarea id="review" name="review" rows="1" required></textarea><br>
             <button type="submit" class="hero-btn">Submit Review</button>
         </form>
+
+        
         <h2>What Our Students Say</h2>
-        <div id="review-wall" class="review-wall">
-            <!-- Reviews will appear here -->
-        </div>
+        <div id="reviewWall"></div>
     </section>
     <!----------contact-------->
     <section id="contact" class="contact" style="text-align: center;">
@@ -133,14 +133,16 @@
              let review = document.getElementById("review").value;
              if (review.trim() !== "") {
                 let reviewWall = document.getElementById("review-wall");
-                let newReview = document.createElement("p");
-                newReview.innerHTML = `🌟 ${review}`;
+                let newReview = document.createElement("div");
+                newReview.classList.add("review-box");
+                newReview.innerHTML = <p>`🌟 ${review}</p>`;
+                 
                 reviewWall.appendChild(newReview);
-                document.getElementById("review").value = ""; // Clear textarea
+                document.getElementById("review").value = ""; 
             } else {
                 alert("Please write something before submitting!");
-    }
-}
+            }
+        }
 
         document.querySelectorAll('nav ul li a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
