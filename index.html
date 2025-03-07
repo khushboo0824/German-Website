@@ -97,7 +97,7 @@
         <h1>REVIEWS AND RESULTS</h1>
 
         <h2>Leave Your Review</h2>
-        <form id="" method"reviewform">
+        <form id="reviewform" onsubmit="addReview(event)">
     =
             <label for="review">Your Review:</label>
             <textarea id="review" name="review" rows="2" placeholder="Write your review..." required></textarea><br>
@@ -105,7 +105,6 @@
         </form>
 
         
-        <h2>What Our Students Say</h2>
         <div id="review-wall"></div>
     </section>
     <!----------contact-------->
@@ -137,6 +136,14 @@
                 let newReview = document.createElement("div");
                 newReview.classList.add("review-box"); // Optional class for styling
                 newReview.innerHTML = `<p>🌟 ${review}</p>`;
+                let currentDate = new Date().toLocaleString();
+            
+                newReview.innerHTML = `
+                   <p>🌟 ${review}</p>
+                   <small>${currentDate}</small>
+                   <button onclick="editReview(this)">Edit</button>
+                   <button onclick="deleteReview(this)">Delete</button>
+               ` ;
                  
                 reviewWall.appendChild(newReview);
                 document.getElementById("review").value = "";
@@ -144,6 +151,19 @@
             } else {
                 alert("Please write something before submitting!");
             }
+        }
+
+        function editReview(button) {
+          let reviewBox = button.parentElement;
+          let reviewText = reviewBox.querySelector("p").innerText.replace("🌟 ", "");
+          let newReview = prompt("Edit your review:", reviewText);
+          if (newReview !== null && newReview.trim() !== "") {
+              reviewBox.querySelector("p").innerHTML = `🌟 ${newReview}`;
+           }
+        }
+        function deleteReview(button) {
+          let reviewBox = button.parentElement;
+          reviewBox.remove();
         }
 
         document.querySelectorAll('nav ul li a').forEach(anchor => {
