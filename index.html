@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+
 </head>
 <body>
     <section class="header">
@@ -119,6 +123,7 @@
     </section>
 
 <!-----------javaScript------>
+<!--
 <script>
     var navLinks = document.getElementById("navLinks");
     function showMenu() {
@@ -161,6 +166,7 @@
             document.getElementById("review-wall").innerHTML = localStorage.getItem("reviews");
         });
     };
+    
     function editReview(button) {
         let reviewBox = button.parentElement;
         let reviewText = reviewBox.querySelector("p").innerText.replace("🌟 ", "");
@@ -185,6 +191,116 @@
         });
     });
 </script>
+-->
+
+    <script>
+        // Firebase configuration (replace with your own config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5xhUiF34UcKNdYh6ZF1aCO-AnAGt_8KE",
+            authDomain: "reviews-a9006.firebaseapp.com",
+            databaseURL: "https://reviews-a9006-default-rtdb.firebaseio.com/",
+            projectId: "reviews-a9006",
+            storageBucket: "reviews-a9006.firebasestorage.app",
+            messagingSenderId: "1064626635400",
+            appId: "1:1064626635400:web:3d915abfd0f344aa1c153d",
+            measurementId: "G-YVJ25ZNS59"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Menu toggle functionality
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+
+        // Function to add a review
+        function addReview(event) {
+            event.preventDefault();
+            let review = document.getElementById("review").value;
+
+            if (review.trim() !== "") {
+                let currentDate = new Date().toLocaleString();
+                let newReview = {
+                    text: review,
+                    date: currentDate
+                };
+
+                // Push the review to Firebase
+                database.ref('reviews').push(newReview, function(error) {
+                    if (error) {
+                        alert("Error submitting review: " + error.message);
+                    } else {
+                        alert("Thank you for your feedback!");
+                        document.getElementById("review").value = "";
+                    }
+                });
+            } else {
+                alert("Please write something before submitting!");
+            }
+        }
+
+        // Function to load reviews from Firebase
+        function loadReviews() {
+            database.ref('reviews').on('value', function(snapshot) {
+                let reviews = snapshot.val();
+                let reviewWall = document.getElementById("review-wall");
+                reviewWall.innerHTML = "";
+
+                for (let key in reviews) {
+                    let review = reviews[key];
+                    let newReview = document.createElement("div");
+                    newReview.classList.add("review-box");
+
+                    newReview.innerHTML = `
+                        <p>🌟 ${review.text}</p>
+                        <small>${review.date}</small>
+                        <button onclick="editReview('${key}')">Edit</button>
+                        <button onclick="deleteReview('${key}')">Delete</button>
+                    `;
+
+                    reviewWall.appendChild(newReview);
+                }
+            });
+        }
+
+        // Function to edit a review
+        function editReview(key) {
+            let newReviewText = prompt("Edit your review:");
+            if (newReviewText !== null && newReviewText.trim() !== "") {
+                database.ref('reviews/' + key).update({
+                    text: newReviewText
+                });
+            }
+        }
+
+        // Function to delete a review
+        function deleteReview(key) {
+            if (confirm("Are you sure you want to delete this review?")) {
+                database.ref('reviews/' + key).remove();
+            }
+        }
+
+        // Load reviews when the page loads
+        window.onload = function () {
+            loadReviews();
+        };
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
