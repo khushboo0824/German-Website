@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCHRITT FUER SCHRITT</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -194,7 +194,7 @@
 -->
 
     <script>
-        // Firebase configuration (replace with your own config)
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyC5xhUiF34UcKNdYh6ZF1aCO-AnAGt_8KE",
             authDomain: "reviews-a9006.firebaseapp.com",
@@ -231,11 +231,15 @@
                     date: currentDate
                 };
 
+                console.log("Submitting review:", newReview);
+
                 // Push the review to Firebase
                 database.ref('reviews').push(newReview, function(error) {
                     if (error) {
+                        console.error("Error submitting review:", error);
                         alert("Error submitting review: " + error.message);
                     } else {
+                        console.log("Review submitted successfully!");
                         alert("Thank you for your feedback!");
                         document.getElementById("review").value = "";
                     }
